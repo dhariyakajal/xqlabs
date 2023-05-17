@@ -1,0 +1,191 @@
+{{ taxonomy from="categories" slug:is="{last_segment}"}} {{if image !=''}}
+<img class="commen-baner-blog" src="{{image}}" alt="{{title}}" />
+{{/if}} {{ /taxonomy }}
+<div class="container mx-auto px-6 bloglist">
+    <div class="grid grid-cols-1 mr-3 ml-3 relative gap-4 mb-4">
+        <div
+            class="relative blogbanner"
+            style="object-fit: contain; height: 100%; width: 100%"
+        >
+            {{ form:subscribe_form id="subscribe_form"}}
+            <div class="subscribe-box-par subscribe-top bloglist-subscribe-top">
+                {{ fields }}
+                <!-- {{field}} -->
+                <input
+                    class="inputFeild"
+                    type="email"
+                    name="{{handle}}"
+                    placeholder="Your email address"
+                    id="{{ handle }}"
+                />
+                <button class="submitBtnFeild">Subscribe</button>
+                <p
+                    class="text-white bg-red-600 rounded-full py-0 px-2 absolute -bottom-7 errorMessage"
+                    id="{{handle}}_error"
+                >
+                    {{ error }}
+                </p>
+                {{ /fields }} {{ if success }}
+                <p
+                    class="text-white absolute bg-green-500 rounded-full py-0 px-2 -bottom-7"
+                    id="successMessage"
+                >
+                    {{ success }}
+                </p>
+                {{ /if }}
+            </div>
+            {{ /form:subscribe_form }}
+        </div>
+
+        {{ taxonomy from="categories" slug:is="{last_segment}"}} {{if title
+        !=''}}
+        <div class="grid lg:gap-2 lg:grid-cols-2 sm:grid-cols-1 md:grid-cols-2">
+            <div class="lg:px-14 md:px-10 px-2 mb-3">
+                <p class="cat-name1">
+                    {{ main_category | title | replace('-', ' ') }} /
+                    <span class="cat_name">{{title}}</span>
+                </p>
+            </div>
+            <div class="lg:px-14 md:px-10 px-2 mb-3 style="align-items:center">
+            <form
+                class=""
+                style="margin-top: 1rem; padding-bottom: 0"
+                action="/search"
+            >
+                <div class="custom-search">
+                    <input
+                        type="search"
+                        class="blog-searchInput w-100"
+                        name="q"
+                        placeholder="Search here"
+                    />
+                    <button class="blog-searchbtn">Search</button>
+                </div>
+            </form>
+        </div>
+        <!-- </div> -->
+    </div>
+
+    {{/if}} {{ /taxonomy }} {{ collection from="posts" limit="6" paginate="true"
+    as="posts" category:is="{last_segment}" }}
+
+    <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:px-14 md:px-10 px-2"
+    >
+        {{ posts }} {{ partial:components.blog_list has_link="true" link="{url}"
+        description="{date}" }} {{ /posts }}
+        <!-- pagination -->
+
+        <!-- pagination  ends-->
+    </div>
+
+    {{ paginate }} {{ if prev_page or next_page }}
+    <div class="py-10 mx-auto">{{ partial:partials._pagination }}</div>
+    {{ /if }} {{ /paginate }} {{ /collection }}
+
+    <div class="lg:px-14 md:px-10 px-2 mb-3">
+        {{ form:subscribe_form id="subscribe_form"}}
+        <div class="subscribe-bottom custom-search pt-5">
+            {{ fields }}
+            <!-- {{field}} -->
+            <input
+                class="blog-searchInput w-100"
+                type="email"
+                name="{{handle}}"
+                placeholder="Your email address"
+                id="{{ handle }}"
+            />
+            <button class="blog-searchbtn" style="background-color: #f553b7">
+                Subscribe
+            </button>
+            <p
+                class="text-white bg-red-600 rounded-full py-0 px-2 absolute -bottom-7 errorMessage"
+                id="{{handle}}_error"
+            >
+                {{ error }}
+            </p>
+            {{ /fields }} {{ if success }}
+            <p
+                class="text-white absolute bg-green-500 rounded-full py-0 px-2 -bottom-7"
+                id="successMessage"
+            >
+                {{ success }}
+            </p>
+            {{ /if }}
+        </div>
+        {{ /form:subscribe_form }}
+    </div>
+
+    <div class="w-full mx-auto catregory-section">
+        <span class="other-cat-label">Other Categories</span>
+        <div
+            class="grid grid-cols-1 md:grid-cols-1"
+            style="padding: 0 5%; text-align: center"
+        >
+            <div class="blogs p-4 mt-6">
+                <!-- TODO: SLIDER -->
+                <section class="customer-logos slider">
+                    {{ taxonomy from="categories" slug:isnt="{ last_segment }"
+                    }}
+
+                    <div class="slide">
+                        {{if title !=''}}
+                        <div class="relative basis-1/2 rounded-cstm">
+                            <img
+                                class="rounded-cstm cat-slider-img"
+                                src="{{image}}"
+                                alt=""
+                            />
+                            <div class="floating-grade-title">
+                                <p>{{title}}</p>
+                            </div>
+                        </div>
+                        {{/if}}
+                    </div>
+                    {{ /taxonomy }}
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+{{ collection:pages }}
+    {{if title != 'Blog'}} 
+        {{ blocks }}
+        {{if type == 'footer_section'}}
+            
+            {{ partial src="layout/_blog-footer" }}
+        {{ /if }}
+        {{ /blocks }}
+    {{ /if }}
+{{ /collection:pages}}
+<script>
+    $(document).ready(function () {
+        $(".customer-logos").slick({
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            autoplay: false,
+            autoplaySpeed: 1500,
+            arrows: true,
+            prevArrow: `<button class="slide-arrow blog-prev-arrow"><span class="material-symbols-outlined rounded-full p-0 border-solid blog-icon-color carouselArrow">
+                            chevron_left</span></button>`,
+            nextArrow: `<button class="slide-arrow blog-next-arrow"><span class="material-symbols-outlined rounded-full p-0 border-solid  blog-icon-color carouselArrow">
+                            chevron_right</span></button>`,
+            dots: false,
+            pauseOnHover: false,
+            responsive: [
+                {
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 2,
+                    },
+                },
+                {
+                    breakpoint: 640,
+                    settings: {
+                        slidesToShow: 1,
+                    },
+                },
+            ],
+        });
+    });
+</script>

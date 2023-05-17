@@ -1,0 +1,71 @@
+<p class="mt-8 mb-2" style="color: #53637d">Share</p>
+<div class="flex items-center space-x-2">
+    <a href="http://pinterest.com/pin/create/button/?url={{ permalink }}" target="blank_" class="social-btn bg-pinterest"
+        ><i class="fa-brands fa-pinterest-p" style="color: #ffffff;"></i></i
+    ></a>
+    <a href="https://twitter.com/intent/tweet?text={{ permalink }}" target="blank_" class="social-btn bg-twitter"
+        ><i
+            class="fab fa-twitter"
+            style="color: #ffffff"
+        ></i
+    ></a>
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{ permalink }}" target="blank_" class="social-btn bg-facebook"
+        ><i
+            class="fa-brands fa-square-facebook"
+            style="color: #ffffff"
+        ></i
+    ></a>
+    <a href="mailto:{{ permalink
+    }}" target="blank_" class="social-btn bg-gmail"
+        ><svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="48px" height="30px"><path fill="#4caf50" d="M45,16.2l-5,2.75l-5,4.75L35,40h7c1.657,0,3-1.343,3-3V16.2z"/><path fill="#1e88e5" d="M3,16.2l3.614,1.71L13,23.7V40H6c-1.657,0-3-1.343-3-3V16.2z"/><polygon fill="#e53935" points="35,11.2 24,19.45 13,11.2 12,17 13,23.7 24,31.95 35,23.7 36,17"/><path fill="#c62828" d="M3,12.298V16.2l10,7.5V11.2L9.876,8.859C9.132,8.301,8.228,8,7.298,8h0C4.924,8,3,9.924,3,12.298z"/><path fill="#fbc02d" d="M45,12.298V16.2l-10,7.5V11.2l3.124-2.341C38.868,8.301,39.772,8,40.702,8h0 C43.076,8,45,9.924,45,12.298z"/></svg></a>
+    <!-- <a href="http://www.tumblr.com/share/link?url={{ permalink | urlencode }}" target="blank_" class="social-btn bg-tumblr" style="color: #ffffff;"
+        ><i class="fab fa-tumblr"></i
+    ></a> --> 
+    <!-- <a href="#" class="social-btn bg-google-plus"
+        ><i class="fa-brands fa-google-plus-g" style="color: #ffffff;"></i></a> -->
+    <!-- working url https://www.linkedin.com/sharing/share-offsite/?url=https://example.com -->
+        
+    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ permalink }}" target="blank_" class="social-btn bg-linkedin"
+        ><i
+            class="fab fa-linkedin"
+            style="color: #ffffff"
+        ></i
+    ></a>
+    <button class="social-btn bg-gmail" onclick="copyToClipboard()" id="copy-btn" url={{permalink}} b-title="{{title}}" title="copy link">
+        <i class="fa fa-copy" style="color: #777777;"></i>
+    </button>
+    
+</div>
+
+<!-- <div class="mt-10">
+    <p class="text-sm font-extrabold tracking-wider text-gray-900 uppercase">
+        Share this on social media
+    </p>
+    <div class="flex flex-wrap pb-4 mt-4 -mx-3">
+        {{ partial:partials/social_link name="Facebook"
+        url="https://www.facebook.com/sharer/sharer.php?u={{ permalink }}" }} {{
+        partial:partials/social_link name="Twitter"
+        url="https://twitter.com/intent/tweet?text={{ permalink }}" }} {{
+        partial:partials/social_link name="Pinterest"
+        url="http://pinterest.com/pin/create/button/?url={{ permalink }}" }} {{
+        partial:partials/social_link name="Linkedin"
+        url="https://www.linkedin.com/shareArticle?mini=true&url={{ permalink
+        }}" }}
+    </div>
+</div> -->
+<script>
+    function copyToClipboard() {
+    // now prepare data for sharing blogs
+    let blog_url = $("#copy-btn").attr("url");
+    let blog_title = $("#copy-btn").attr("b-title");
+    
+    //share link
+    let copy_link = `${blog_title} ${blog_url}`;
+    console.log(copy_link)
+    var $temp = $("<input>");
+    $("body").append($temp);
+    $temp.val(copy_link).select();
+    document.execCommand("copy");
+    $temp.remove();
+    }
+</script>
